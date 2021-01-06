@@ -85,20 +85,61 @@
               <thead>
                 <tr>
                   <th>Tasks</th>
+                  <td></td>
                 </tr>
               </thead>
               <tbody>
-                {% for projects in projects %}
-                    <tr>
-                        <td>{{projects['name']}}</td>
-                    </tr>
+                {% for i in range(projects | length) %}
+                <tr>
+                    <td>{{projects[i].name}}</td>
+                    <td>
+                        <form action="{{ url_for('deletetask', taskname=projects[i].name) }}" method="post" role="form">
+                            <input type="submit" value="Delete" />
+                        </form>
+                    </td>
+                    <td>
+                        <form action="{{ url_for('completetask', taskname=projects[i].name) }}" method="post" role="form">
+                            <input type="submit" value="Mark as Complete" />
+                        </form>
+                    </td>
+                </tr>
                 {% endfor %}
-                
               </tbody>
             </table>
             <br />
+            </div>
             {% block content %}
             {% endblock %}
+            <br /><br /><br />
+            <h3>Completed Projects</h3>
+            <div class="table-responsive">
+                <table class="table table-striped table-sm">
+                  <thead>
+                    <tr>
+                      <th>Completed Tasks</th>
+                      <td></td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in range(completed | length) %}
+                    <tr>
+                        <td>{{completed[i].name}}</td>
+                        <td>
+                            <form action="{{ url_for('deletecompletedtask', taskname=completed[i].name) }}" method="post" role="form">
+                                <input type="submit" value="Delete" />
+                            </form>
+                        </td>
+                        <td>
+                            <form action="{{ url_for('completetask', taskname=completed[i].name) }}" method="post" role="form">
+                                <!-- <input type="submit" value="Mark as Complete" />  Change to "Mark as Uncomplete" -->
+                            </form>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <br />
+            </div>
             <!-- <label for="quickIssue">Add Task</label>
             <textarea class="form-control" name="addtask" rows="4">Write a description here...</textarea><br />
             <form action="{{ url_for('tasks') }}" name="addtask" method="post" enctype="multipart/form-data">
@@ -108,11 +149,13 @@
             </div>
             </form> -->
 
-          </div>
+          <!-- </div> -->
+
+          
           <br /><br />
           <footer class="mastfoot mt-auto">
             <div class="inner">
-            <p>Portfolio project by <a href="https://getbootstrap.com/">Andrew C.</a></p>
+            <p><a href="..">Created by Andrew C.</a></p>
             </div>
         </footer>
         </main>
